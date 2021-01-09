@@ -14,7 +14,7 @@
 
 <script>
   export default {
-    name: "TabbarItem",
+    name: "TabBarItem",
     props: {
       path: String,
       activeColor: {
