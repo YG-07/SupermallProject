@@ -19,7 +19,7 @@
       path: String,
       activeColor: {
         type: String,
-        default: 'green'
+        default: 'deepPink'
       }
     },
     computed: {
