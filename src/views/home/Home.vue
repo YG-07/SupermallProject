@@ -79,7 +79,12 @@
       return {
         banners: [],
         recommends: [],
-        titles: ['流行','新款','精选']
+        titles: ['流行','新款','精选'],
+        goods: {
+          'pop': {page: 0, list: []},
+          'new': {page: 0, list: []},
+          'sell': {page: 0, list: []}
+        }
       }
     },
     components: {
@@ -90,11 +95,26 @@
       TabControl
     },
     created() {
-      getHomeMultidata().then(res => {
-        console.log(res);
-        this.banners = res.data.banner.list
-        this.recommends = res.data.recommend.list
-      })
+      this.getHomeMultidata()
+      this.getHomeCoods('pop')
+      this.getHomeCoods('new')
+      this.getHomeCoods('sell')
+    },
+    methods: {
+      // 对请求方法抽离，方法名可以和导入的相同
+      getHomeMultidata() {
+        getHomeMultidata().then(res => {
+          console.log(res);
+          this.banners = res.data.banner.list
+          this.recommends = res.data.recommend.list
+        })
+      },
+      getHomeCoods(type) {
+        this.getHomeCoods(type, 1).then(res => {
+
+        })
+      }
+      
     }
   }
 </script>
