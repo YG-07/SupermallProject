@@ -16,7 +16,6 @@ export function request(config) {
   //   reject(err)
   // })
   instance.interceptors.response.use(res => {
-    console.log(res);
     return res.data
   }, err => {
     reject(err)
