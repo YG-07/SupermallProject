@@ -7,6 +7,9 @@
     <home-recommend :recommends="recommends" />
     <home-feature />
     <tab-control class="tab-control" :titles="titles" />
+    
+    <goods-list :goods="goods['pop'].list"/>
+    
     <ul>
       <li>文字1</li>
       <li>文字2</li>
@@ -70,8 +73,13 @@
   // 公共组件
   import NavBar from 'components/common/navbar/NavBar'
   import TabControl from 'components/content/tabControl/TabControl'
+  import GoodsList from 'components/content/goods/GoodsList'
+  
   // 网络请求js
-  import {getHomeMultidata} from 'network/home'
+  import {
+    getHomeMultidata,
+    getHomeGoods
+  } from 'network/home'
 
   export default {
     name: "Home",
@@ -92,7 +100,8 @@
       HomeRecommend,
       HomeFeature,
       NavBar,
-      TabControl
+      TabControl,
+      GoodsList
     },
     created() {
       this.getHomeMultidata()
@@ -110,8 +119,12 @@
         })
       },
       getHomeCoods(type) {
-        this.getHomeCoods(type, 1).then(res => {
-
+        const page = this.goods[type].page + 1
+        getHomeGoods(type, page).then(res => {
+          // res是请求的前30条数据,后端接口已失效！
+          console.log(res)
+          this.goods[type].list.push(...res.data.list)
+          this.goods[type].page += 1
         })
       }
       
