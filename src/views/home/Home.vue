@@ -3,65 +3,70 @@
     <nav-bar class="home-nav">
       <div slot="center">购物街</div>
     </nav-bar>
-    <home-swiper :banners="banners" />
-    <home-recommend :recommends="recommends" />
-    <home-feature />
-    <tab-control class="tab-control" :titles="titles" />
     
-    <goods-list :goods="goods['pop'].list"/>
+    <scroll class="content" ref="scroll">
+      <home-swiper :banners="banners" />
+      <home-recommend :recommends="recommends" />
+      <home-feature />
+      <tab-control class="tab-control" :titles="titles" />
+      <!--<goods-list :goods="goods['pop'].list"/>-->
+      <ul>
+        <li>文字1</li>
+        <li>文字2</li>
+        <li>文字3</li>
+        <li>文字4</li>
+        <li>文字5</li>
+        <li>文字6</li>
+        <li>文字7</li>
+        <li>文字8</li>
+        <li>文字9</li>
+        <li>文字10</li>
+        <li>文字11</li>
+        <li>文字12</li>
+        <li>文字13</li>
+        <li>文字14</li>
+        <li>文字15</li>
+        <li>文字16</li>
+        <li>文字17</li>
+        <li>文字18</li>
+        <li>文字19</li>
+        <li>文字20</li>
+        <li>文字21</li>
+        <li>文字22</li>
+        <li>文字23</li>
+        <li>文字24</li>
+        <li>文字25</li>
+        <li>文字26</li>
+        <li>文字27</li>
+        <li>文字28</li>
+        <li>文字29</li>
+        <li>文字30</li>
+        <li>文字31</li>
+        <li>文字32</li>
+        <li>文字33</li>
+        <li>文字34</li>
+        <li>文字35</li>
+        <li>文字36</li>
+        <li>文字37</li>
+        <li>文字38</li>
+        <li>文字39</li>
+        <li>文字40</li>
+        <li>文字41</li>
+        <li>文字42</li>
+        <li>文字43</li>
+        <li>文字44</li>
+        <li>文字45</li>
+        <li>文字46</li>
+        <li>文字47</li>
+        <li>文字48</li>
+        <li>文字49</li>
+        <li>文字50</li>
+      </ul>
+    </scroll>
     
-    <ul>
-      <li>文字1</li>
-      <li>文字2</li>
-      <li>文字3</li>
-      <li>文字4</li>
-      <li>文字5</li>
-      <li>文字6</li>
-      <li>文字7</li>
-      <li>文字8</li>
-      <li>文字9</li>
-      <li>文字10</li>
-      <li>文字11</li>
-      <li>文字12</li>
-      <li>文字13</li>
-      <li>文字14</li>
-      <li>文字15</li>
-      <li>文字16</li>
-      <li>文字17</li>
-      <li>文字18</li>
-      <li>文字19</li>
-      <li>文字20</li>
-      <li>文字21</li>
-      <li>文字22</li>
-      <li>文字23</li>
-      <li>文字24</li>
-      <li>文字25</li>
-      <li>文字26</li>
-      <li>文字27</li>
-      <li>文字28</li>
-      <li>文字29</li>
-      <li>文字30</li>
-      <li>文字31</li>
-      <li>文字32</li>
-      <li>文字33</li>
-      <li>文字34</li>
-      <li>文字35</li>
-      <li>文字36</li>
-      <li>文字37</li>
-      <li>文字38</li>
-      <li>文字39</li>
-      <li>文字40</li>
-      <li>文字41</li>
-      <li>文字42</li>
-      <li>文字43</li>
-      <li>文字44</li>
-      <li>文字45</li>
-      <li>文字46</li>
-      <li>文字47</li>
-      <li>文字48</li>
-      <li>文字49</li>
-      <li>文字50</li>
-    </ul>
+    <!-- 修饰符.native，监听一个组件的原生事件-->
+    <back-top @click.native="backClick" />
+    
   </div>
 </template>
 
@@ -74,6 +79,8 @@
   import NavBar from 'components/common/navbar/NavBar'
   import TabControl from 'components/content/tabControl/TabControl'
   import GoodsList from 'components/content/goods/GoodsList'
+  import Scroll from 'components/common/scroll/Scroll'
+  import BackTop from 'components/content/backTop/BackTop'
   
   // 网络请求js
   import {
@@ -101,7 +108,9 @@
       HomeFeature,
       NavBar,
       TabControl,
-      GoodsList
+      GoodsList,
+      Scroll,
+      BackTop
     },
     created() {
       this.getHomeMultidata()
@@ -126,17 +135,25 @@
           this.goods[type].list.push(...res.data.list)
           this.goods[type].page += 1
         })
+      },
+      backClick() {
+        console.log('点击BackTop组件')
+        // 通过this.$refs.scroll拿到组件对象，然后访问其中的元素scroll
+        // 滚动的函数scrollTo(x坐标, y坐标, 变化时间毫秒)
+        this.$refs.scroll.scrollTo(0, 0, 500)
       }
-      
     }
   }
 </script>
 
 <style scoped>
+  /*scoped作用域*/
   #home {
-    padding-top: 44px;
+    height: 100vh;
+    position: relative;
+    /*padding-top: 44px;*/
     /* 底部间隙 待优化 */
-    padding-bottom: 100px;
+    /*padding-bottom: 100px;*/
   }
   .home-nav {
     color: #fff;
@@ -151,5 +168,17 @@
     /* sticky达到position的值时就变成fixed */
     position: sticky;
     top: 44px;
+  }
+  /*.content {*/
+    /*height: calc(100% - 49px);*/
+    /*margin-top: 44px;*/
+    /*overflow: hidden;*/
+    /*background-color: #ff8198;*/
+  /*}*/
+  .content {
+    position: absolute;
+    top: 44px;
+    bottom: 49px;
+    overflow: hidden;
   }
 </style>
