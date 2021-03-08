@@ -4,12 +4,14 @@
       <div slot="center">购物街</div>
     </nav-bar>
     
-    <scroll class="content" ref="scroll">
+    <scroll class="content" ref="scroll"
+            :probe-type="3" @scroll="contentScroll"
+            :pull-up-load="true" @pullingUp="loadMore" >
       <home-swiper :banners="banners" />
       <home-recommend :recommends="recommends" />
       <home-feature />
-      <tab-control class="tab-control" :titles="titles" />
-      <!--<goods-list :goods="goods['pop'].list"/>-->
+      <tab-control class="tab-control" :titles="titles" @tabClick="tabClick" />
+      <goods-list :goods="goods[currentType].list"/>
       <ul>
         <li>文字1</li>
         <li>文字2</li>
@@ -65,7 +67,7 @@
     </scroll>
     
     <!-- 修饰符.native，监听一个组件的原生事件-->
-    <back-top @click.native="backClick" />
+    <back-top @click.native="backClick" v-show="isShowBackTop" />
     
   </div>
 </template>
@@ -99,7 +101,9 @@
           'pop': {page: 0, list: []},
           'new': {page: 0, list: []},
           'sell': {page: 0, list: []}
-        }
+        },
+        currentType: 'pop',
+        isShowBackTop: false
       }
     },
     components: {
@@ -119,6 +123,12 @@
       this.getHomeCoods('sell')
     },
     methods: {
+      tabClick(index) {
+        if (index == 0) this.currentType = 'pop'
+        else if (index == 1) this.currentType = 'new'
+        else if (index == 2) this.currentType = 'sell'
+        console.log(this.currentType)
+      },
       // 对请求方法抽离，方法名可以和导入的相同
       getHomeMultidata() {
         getHomeMultidata().then(res => {
@@ -141,6 +151,16 @@
         // 通过this.$refs.scroll拿到组件对象，然后访问其中的元素scroll
         // 滚动的函数scrollTo(x坐标, y坐标, 变化时间毫秒)
         this.$refs.scroll.scrollTo(0, 0, 500)
+      },
+      contentScroll(position) {
+        // console.log(position)
+        this.isShowBackTop = (-position.y) > 300
+      },
+      loadMore() {
+        console.log('父组件 上拉加载更多~')
+        this.getHomeCoods(this.currentType)
+        // 刷新一下，重新计算可滚动高度
+        this.$refs.scroll.scroll.refresh()
       }
     }
   }

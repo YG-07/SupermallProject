@@ -3,8 +3,8 @@
     <!-- 下载better-scroll，实现移动端更好的滚动效果
      npm指令：npm install better-scroll --save
      -->
-    <div class="wrapper" ref="wpr">
-      <ul class="content">
+    <scroll class="content" ref="scroll" :probe-type="1">
+      <ul>
         <button class="btn">按钮</button>
         <li>分类列表1</li>
         <li>分类列表2</li>
@@ -57,58 +57,57 @@
         <li>分类列表49</li>
         <li>分类列表50</li>
       </ul>
-    </div>
-    
-  
+    </scroll>
   </div>
 </template>
 
 <script>
-  import BScroll from 'better-scroll'
+  // import BScroll from 'bet/ter-scroll'
+  import Scroll from 'components/common/scroll/Scroll'
   
   export default {
     name: "Category",
-    data() {
-      return {
-        scroll: null
-      }
-    },
-    mounted() {
-      console.log(this.$refs.wpr)
-      console.log(document.querySelector('.wrapper'))
-      console.log(BScroll)
-      // 2. better-scroll滚动，顺滑，底部有弹簧效果
-      this.scroll = new BScroll(this.$refs.wpr, {
-        // probe侦测。默认0，0和1不侦测位置，2手指在上面时侦测，3手指不在上面也侦测
-        probeType: 0,
-        // button不受影响，当为true时，div/span等等标签才能被点击
-        click: true,
-        pullUpLoad: true
-      })
-      
-      // on事件监听
-      this.scroll.on('scroll', (position) => {
-        // console.log(position)
-      })
-      
-      this.scroll.on('pullingUp', () => {
-        console.log('上拉加载~')
-        // 发送网络请求，请求更多页的数据
-        // 等数据请求完成，并且将新的数据展示出来后使用finishPullUp()
-        setTimeout(() => {
-          this.scroll.finishPullUp()
-        }, 1000)
-      })
-      
-      document.querySelector('.btn').addEventListener('click', () => {
-        console.log('点击按钮')
-      })
+    components: {
+      Scroll
     }
+    
+    // mounted() {
+    //   console.log(this.$refs.wpr)
+    //   console.log(document.querySelector('.wrapper'))
+    //   console.log(BScroll)
+    //   // 2. better-scroll滚动，顺滑，底部有弹簧效果
+    //   this.scroll = new BScroll(this.$refs.wpr, {
+    //     // probe侦测。默认0，0和1不侦测位置，2手指在上面时侦测，3手指不在上面也侦测
+    //     probeType: 0,
+    //     // button不受影响，当为true时，div/span等等标签才能被点击
+    //     click: true,
+    //     pullUpLoad: true
+    //   })
+    //
+    //   // on事件监听
+    //   this.scroll.on('scroll', (position) => {
+    //     // console.log(position)
+    //   })
+    //
+    //   this.scroll.on('pullingUp', () => {
+    //     console.log('上拉加载~')
+    //     // 发送网络请求，请求更多页的数据
+    //     // 等数据请求完成，并且将新的数据展示出来后使用finishPullUp()
+    //     setTimeout(() => {
+    //       this.scroll.finishPullUp()
+    //     }, 1000)
+    //   })
+    //
+    //   document.querySelector('.btn').addEventListener('click', () => {
+    //     console.log('点击按钮')
+    //   })
+    // }
+    
   }
 </script>
 
 <style scoped>
-  .wrapper {
+  .content {
     height: 200px;
     background-color: #ff8198;
     overflow: hidden;
