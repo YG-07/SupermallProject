@@ -97,6 +97,7 @@
         banners: [],
         recommends: [],
         titles: ['流行','新款','精选'],
+        // 商品数据的请求
         goods: {
           'pop': {page: 0, list: []},
           'new': {page: 0, list: []},
@@ -144,6 +145,12 @@
           console.log(res)
           this.goods[type].list.push(...res.data.list)
           this.goods[type].page += 1
+          console.log(type)
+          console.log(this.goods[type].page)
+          
+          this.$refs.scroll.finishPullUp()
+        }).catch(err => {
+          console.log('请求数据失败')
         })
       },
       backClick() {

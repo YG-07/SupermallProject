@@ -2,6 +2,7 @@
   <div class="goods">
     <ul>
       {{goods}}
+      <!--传递GoodsItem-->
       <goods-list-item v-for="item in goods" :goods-item="item" />
       <li>goods列表1</li>
       <li>goods列表2</li>

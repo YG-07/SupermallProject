@@ -1,7 +1,10 @@
 <template>
   <div class="tab-control">
-    <div class="tab-control-item" :class="{active: index === currentIndex}"
-      v-for="(item, index) in titles" @click="itemClick(index)" :key="index">
+    <!--遍历父组件的titles，展示分类选项,通过比较index和当前值，绑定选中的active样式-->
+    <div class="tab-control-item"
+         :class="{active: index === currentIndex}"
+         v-for="(item, index) in titles"
+         @click="itemClick(index)" :key="index">
       <span>{{item}}</span>
     </div>
   </div>
